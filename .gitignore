@@ -1,0 +1,25 @@
+# Data files - never commit raw data to Git
+data/raw/
+data/processed/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PostgreSQL credentials (we'll create this later)
+config/db_config.ini
+*.env
