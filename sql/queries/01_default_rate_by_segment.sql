@@ -37,7 +37,7 @@ ranked AS (
         ) AS risk_percentile
 
     FROM segment_stats
-    WHERE total_borrowers >= 100
+    WHERE total_borrowers >= 50
 )
 
 SELECT *

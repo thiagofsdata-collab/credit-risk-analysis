@@ -74,7 +74,7 @@ segment_query = text("""
                 )::NUMERIC * 100, 1
             ) AS risk_percentile
         FROM segment_stats
-        WHERE total_borrowers >= 100
+        WHERE total_borrowers >= 50
     )
     SELECT * FROM ranked
     ORDER BY default_rate_pct DESC
@@ -173,6 +173,25 @@ concentration_query = text("""
     SELECT * FROM concentration
     ORDER BY default_rate_pct DESC
 """)
+
+
+# ── Heatmap-specific query (no utilization_band grouping) ─────
+heatmap_query = text("""
+    SELECT
+        age_group,
+        income_band,
+        COUNT(*)                                          AS total_borrowers,
+        ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct
+    FROM loans_clean
+    GROUP BY age_group, income_band
+    ORDER BY age_group, income_band
+""")
+
+df_heatmap = pd.read_sql(heatmap_query, engine)
+df_heatmap.to_csv("data/processed/heatmap.csv", index=False)
+print("  Saved: data/processed/heatmap.csv")
+
+
 
 df_concentration = pd.read_sql(concentration_query, engine)
 print(df_concentration.to_string(index=False))
