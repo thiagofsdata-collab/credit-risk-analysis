@@ -79,10 +79,13 @@ PostgreSQL — analytical queries
 (window functions, CTEs, risk segmentation)
         ↓
 Python + Pandas
-(extraction, metric computation, CSV export)
+(extraction, metric computation, exploratory analysis)
+        ↓
+Power BI Desktop
+(direct connection to PostgreSQL via Npgsql driver)
         ↓
 Power BI Dashboard
-(KPIs, bar charts, matrix, segment table)
+(KPIs, bar charts, utilization matrix, segment table)
 ```
 
 ---
@@ -94,7 +97,7 @@ Power BI Dashboard
 | Database | PostgreSQL 15 (Docker) | Schema, cleaning, analytical queries |
 | SQL Patterns | CTEs + Window Functions | Segmentation, ranking, concentration |
 | Data Layer | Python + Pandas + SQLAlchemy | Extraction and metric computation |
-| Dashboard | Power BI Desktop | Interactive business dashboard |
+| Dashboard | Power BI Desktop | Direct PostgreSQL connection, DAX measures, interactive dashboard |
 | Version Control | Git — feature branch strategy | Clean, reviewable history |
 
 ---
