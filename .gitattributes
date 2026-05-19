@@ -1,3 +1,8 @@
+*.ipynb linguist-vendored
 *.html linguist-detectable=false
 *.html linguist-documentation=true
 outputs/figures/* linguist-detectable=false
+reports/* linguist-documentation
+notebooks/* linguist-vendored
+outputs/* linguist-generated
+docs/* linguist-documentation
