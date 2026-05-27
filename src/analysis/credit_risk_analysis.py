@@ -52,12 +52,12 @@ segment_query = text("""
             age_group,
             income_band,
             utilization_band,
-            COUNT(*)                                          AS total_borrowers,
-            SUM(serious_delinquency)                          AS total_defaults,
+            COUNT(*) AS total_borrowers,
+            SUM(serious_delinquency) AS total_defaults,
             ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct,
-            ROUND(AVG(monthly_income)::NUMERIC, 2)            AS avg_income,
+            ROUND(AVG(monthly_income)::NUMERIC, 2) AS avg_income,
             ROUND(AVG(revolving_utilization)::NUMERIC * 100, 2) AS avg_utilization_pct,
-            ROUND(AVG(debt_ratio)::NUMERIC, 4)                AS avg_debt_ratio
+            ROUND(AVG(debt_ratio)::NUMERIC, 4) AS avg_debt_ratio
         FROM loans_clean
         GROUP BY age_group, income_band, utilization_band
     ),
@@ -92,11 +92,11 @@ delinquency_query = text("""
     WITH delinquency_buckets AS (
         SELECT
             CASE
-                WHEN total_delinquency_events = 0  THEN '0_clean'
-                WHEN total_delinquency_events = 1  THEN '1_event'
-                WHEN total_delinquency_events = 2  THEN '2_events'
+                WHEN total_delinquency_events = 0 THEN '0_clean'
+                WHEN total_delinquency_events = 1 THEN '1_event'
+                WHEN total_delinquency_events = 2 THEN '2_events'
                 WHEN total_delinquency_events <= 5 THEN '3_to_5_events'
-                ELSE                                    '6_plus_events'
+                ELSE '6_plus_events'
             END AS delinquency_bucket,
             serious_delinquency,
             monthly_income,
@@ -107,11 +107,11 @@ delinquency_query = text("""
     bucket_stats AS (
         SELECT
             delinquency_bucket,
-            COUNT(*)                                        AS total_borrowers,
-            SUM(serious_delinquency)                        AS total_defaults,
+            COUNT(*) AS total_borrowers,
+            SUM(serious_delinquency) AS total_defaults,
             ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct,
-            ROUND(AVG(monthly_income)::NUMERIC, 2)          AS avg_income,
-            ROUND(AVG(debt_ratio)::NUMERIC, 4)              AS avg_debt_ratio,
+            ROUND(AVG(monthly_income)::NUMERIC, 2) AS avg_income,
+            ROUND(AVG(debt_ratio)::NUMERIC, 4) AS avg_debt_ratio,
             ROUND(AVG(revolving_utilization)::NUMERIC * 100, 2) AS avg_utilization_pct
         FROM delinquency_buckets
         GROUP BY delinquency_bucket
@@ -138,8 +138,8 @@ concentration_query = text("""
         SELECT
             income_band,
             age_group,
-            COUNT(*)                                          AS total_borrowers,
-            SUM(serious_delinquency)                          AS total_defaults,
+            COUNT(*) AS total_borrowers,
+            SUM(serious_delinquency) AS total_defaults,
             ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct
         FROM loans_clean
         GROUP BY income_band, age_group
@@ -180,7 +180,7 @@ heatmap_query = text("""
     SELECT
         age_group,
         income_band,
-        COUNT(*)                                          AS total_borrowers,
+        COUNT(*) AS total_borrowers,
         ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct
     FROM loans_clean
     GROUP BY age_group, income_band
@@ -203,7 +203,7 @@ df_segments.to_csv("data/processed/segments.csv", index=False)
 df_delinquency.to_csv("data/processed/delinquency_profile.csv", index=False)
 df_concentration.to_csv("data/processed/concentration.csv", index=False)
 
-print("  Saved: data/processed/segments.csv")
-print("  Saved: data/processed/delinquency_profile.csv")
-print("  Saved: data/processed/concentration.csv")
+print(" Saved: data/processed/segments.csv")
+print(" Saved: data/processed/delinquency_profile.csv")
+print(" Saved: data/processed/concentration.csv")
 print("\nAnalysis complete.")

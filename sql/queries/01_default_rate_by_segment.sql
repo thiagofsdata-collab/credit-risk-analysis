@@ -12,12 +12,12 @@ WITH segment_stats AS (
         age_group,
         income_band,
         utilization_band,
-        COUNT(*)                                         AS total_borrowers,
-        SUM(serious_delinquency)                         AS total_defaults,
-        ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2)         AS default_rate_pct,
-        ROUND(AVG(monthly_income)::NUMERIC, 2)                    AS avg_income,
-        ROUND(AVG(revolving_utilization)::NUMERIC * 100, 2)       AS avg_utilization_pct,
-        ROUND(AVG(debt_ratio)::NUMERIC, 4)                        AS avg_debt_ratio
+        COUNT(*) AS total_borrowers,
+        SUM(serious_delinquency) AS total_defaults,
+        ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct,
+        ROUND(AVG(monthly_income)::NUMERIC, 2) AS avg_income,
+        ROUND(AVG(revolving_utilization)::NUMERIC * 100, 2) AS avg_utilization_pct,
+        ROUND(AVG(debt_ratio)::NUMERIC, 4) AS avg_debt_ratio
     FROM loans_clean
     GROUP BY age_group, income_band, utilization_band
 ),

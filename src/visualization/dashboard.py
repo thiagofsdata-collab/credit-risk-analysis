@@ -11,8 +11,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 # ── 1. Load processed data ────────────────────────────────────
-df_segments     = pd.read_csv("data/processed/segments.csv")
-df_delinquency  = pd.read_csv("data/processed/delinquency_profile.csv")
+df_segments = pd.read_csv("data/processed/segments.csv")
+df_delinquency = pd.read_csv("data/processed/delinquency_profile.csv")
 df_concentration = pd.read_csv("data/processed/concentration.csv")
 df_heatmap = pd.read_csv("data/processed/heatmap.csv")
 
@@ -25,7 +25,7 @@ heatmap_data = df_heatmap.pivot(
 )
 
 # Consistent ordering
-age_order    = ["under_30", "30_to_44", "45_to_59", "60_plus"]
+age_order = ["under_30", "30_to_44", "45_to_59", "60_plus"]
 income_order = ["low", "medium", "high", "very_high"]
 
 heatmap_data = heatmap_data.reindex(index=age_order, columns=income_order)
@@ -47,8 +47,8 @@ fig = make_subplots(
         "Credit Utilization vs Default Rate",
     ),
     specs=[
-        [{"type": "xy"},      {"type": "xy"}],
-        [{"type": "domain"},  {"type": "xy"}],
+        [{"type": "xy"}, {"type": "xy"}],
+        [{"type": "domain"}, {"type": "xy"}],
     ],
     vertical_spacing=0.14,
     horizontal_spacing=0.10,
@@ -142,8 +142,8 @@ for band, color in zip(util_order, util_colors):
             y=row["default_rate_pct"],
             mode="markers+text",
             marker=dict(
-                size=row["total_borrowers"] / 5000,  # fixed divisor
-                sizemin=20,                           # minimum visible size
+                size=row["total_borrowers"] / 5000,  
+                sizemin=20,                           
                 color=color,
                 opacity=0.8
             ),
@@ -174,12 +174,12 @@ fig.update_layout(
 )
 
 # Axis labels
-fig.update_xaxes(title_text="Income Band",        row=1, col=1)
-fig.update_yaxes(title_text="Age Group",          row=1, col=1)
+fig.update_xaxes(title_text="Income Band", row=1, col=1)
+fig.update_yaxes(title_text="Age Group", row=1, col=1)
 fig.update_xaxes(title_text="Delinquency History", row=1, col=2)
-fig.update_yaxes(title_text="Default Rate (%)",   row=1, col=2)
+fig.update_yaxes(title_text="Default Rate (%)", row=1, col=2)
 fig.update_xaxes(title_text="Avg Utilization (%)", row=2, col=2)
-fig.update_yaxes(title_text="Default Rate (%)",   row=2, col=2)
+fig.update_yaxes(title_text="Default Rate (%)", row=2, col=2)
 
 # ── 6. Export ─────────────────────────────────────────────────
 output_path = "outputs/figures/credit_risk_dashboard.html"

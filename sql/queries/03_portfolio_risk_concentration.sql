@@ -13,8 +13,8 @@ WITH income_risk AS (
     SELECT
         income_band,
         age_group,
-        COUNT(*)                                        AS total_borrowers,
-        SUM(serious_delinquency)                        AS total_defaults,
+        COUNT(*) AS total_borrowers,
+        SUM(serious_delinquency) AS total_defaults,
         ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct
     FROM loans_clean
     GROUP BY income_band, age_group
@@ -23,8 +23,8 @@ WITH income_risk AS (
 -- Pre-compute portfolio totals separately to avoid nesting window functions
 portfolio_totals AS (
     SELECT
-        SUM(total_defaults)    AS grand_total_defaults,
-        SUM(total_borrowers)   AS grand_total_borrowers
+        SUM(total_defaults) AS grand_total_defaults,
+        SUM(total_borrowers) AS grand_total_borrowers
     FROM income_risk
 ),
 

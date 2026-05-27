@@ -13,7 +13,7 @@ WITH delinquency_buckets AS (
             WHEN total_delinquency_events = 1  THEN '1_event'
             WHEN total_delinquency_events = 2  THEN '2_events'
             WHEN total_delinquency_events <= 5 THEN '3_to_5_events'
-            ELSE                                    '6_plus_events'
+            ELSE '6_plus_events'
         END AS delinquency_bucket,
         serious_delinquency,
         monthly_income,
@@ -26,12 +26,12 @@ WITH delinquency_buckets AS (
 bucket_stats AS (
     SELECT
         delinquency_bucket,
-        COUNT(*)                                    AS total_borrowers,
-        SUM(serious_delinquency)                    AS total_defaults,
-        ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2)    AS default_rate_pct,
-        ROUND(AVG(monthly_income)::NUMERIC, 2)               AS avg_income,
-        ROUND(AVG(debt_ratio)::NUMERIC, 4)                   AS avg_debt_ratio,
-        ROUND(AVG(revolving_utilization)::NUMERIC * 100, 2)  AS avg_utilization_pct
+        COUNT(*) AS total_borrowers,
+        SUM(serious_delinquency) AS total_defaults,
+        ROUND(AVG(serious_delinquency)::NUMERIC * 100, 2) AS default_rate_pct,
+        ROUND(AVG(monthly_income)::NUMERIC, 2) AS avg_income,
+        ROUND(AVG(debt_ratio)::NUMERIC, 4) AS avg_debt_ratio,
+        ROUND(AVG(revolving_utilization)::NUMERIC * 100, 2) AS avg_utilization_pct
     FROM delinquency_buckets
     GROUP BY delinquency_bucket
 ),

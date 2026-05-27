@@ -66,26 +66,26 @@ enriched AS (
 
         -- Age segmentation
         CASE
-            WHEN age < 30               THEN 'under_30'
-            WHEN age BETWEEN 30 AND 44  THEN '30_to_44'
-            WHEN age BETWEEN 45 AND 59  THEN '45_to_59'
+            WHEN age < 30 THEN 'under_30'
+            WHEN age BETWEEN 30 AND 44 THEN '30_to_44'
+            WHEN age BETWEEN 45 AND 59 THEN '45_to_59'
             ELSE                             '60_plus'
         END AS age_group,
 
         -- Income segmentation (uses already-imputed monthly_income)
         CASE
-            WHEN monthly_income < 3000               THEN 'low'
+            WHEN monthly_income < 3000 THEN 'low'
             WHEN monthly_income BETWEEN 3000 AND 6999 THEN 'medium'
             WHEN monthly_income BETWEEN 7000 AND 11999 THEN 'high'
-            ELSE                                          'very_high'
+            ELSE 'very_high'
         END AS income_band,
 
         -- Utilization risk band (uses already-clamped revolving_utilization)
         CASE
-            WHEN revolving_utilization < 0.3  THEN 'low'
-            WHEN revolving_utilization < 0.6  THEN 'medium'
-            WHEN revolving_utilization < 0.9  THEN 'high'
-            ELSE                                   'critical'
+            WHEN revolving_utilization < 0.3 THEN 'low'
+            WHEN revolving_utilization < 0.6 THEN 'medium'
+            WHEN revolving_utilization < 0.9 THEN 'high'
+            ELSE 'critical'
         END AS utilization_band,
 
         -- Total delinquency events across all severity levels
